@@ -1,7 +1,7 @@
 {
     "name": "DoorSoundCheeseFix",
     "version_number": "1.0.0",
-    "website_url": "",
+    "website_url": "https://github.com/AuriRex/GTFO_DoorSoundCheeseFix",
     "description": "Changes the way small (weak) doors behave to prevent sound based cheesing.",
     "dependencies": []
 }
