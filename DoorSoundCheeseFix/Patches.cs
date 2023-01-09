@@ -2,6 +2,7 @@
 using LevelGeneration;
 using System.Collections;
 using UnityEngine;
+using static BepInEx.Unity.IL2CPP.Utils.MonoBehaviourExtensions;
 
 namespace DoorSoundCheeseFix
 {
@@ -12,7 +13,7 @@ namespace DoorSoundCheeseFix
         {
             public static void Postfix(LG_WeakDoor_Anim __instance)
             {
-                // Closing does not consider doors closed after pressing the button!
+                // Closing does not consider doors closed right after pressing the button!
                 var valueClosing = __instance.m_animData[eDoorStatus.Closed];
                 valueClosing.traversableAtBegin = true;
                 __instance.m_animData[eDoorStatus.Closed] = valueClosing;
@@ -31,7 +32,7 @@ namespace DoorSoundCheeseFix
                 {
                     __instance.StopCoroutine(__instance.m_doorAnimRoutine);
 
-                    __instance.m_doorAnimRoutine = DSCFMod.StartCoroutine(DoorAnimSequence(__instance, __instance.m_animData[state.status], state));
+                    __instance.m_doorAnimRoutine = __instance.StartCoroutine(DoorAnimSequence(__instance, __instance.m_animData[state.status], state));
                 }
             }
 
