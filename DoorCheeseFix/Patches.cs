@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine;
 using static BepInEx.Unity.IL2CPP.Utils.MonoBehaviourExtensions;
 
-namespace DoorSoundCheeseFix
+namespace DoorCheeseFix
 {
     public class Patches
     {
@@ -15,8 +15,8 @@ namespace DoorSoundCheeseFix
         {
             public static void Postfix()
             {
-                DSCFMod.LogMsg("Clearing ActiveDoors.");
-                DSCFMod.ActiveDoors.Clear();
+                DCFMod.LogMsg("Clearing ActiveDoors.");
+                DCFMod.ActiveDoors.Clear();
             }
         }
 
@@ -34,8 +34,8 @@ namespace DoorSoundCheeseFix
                     if (__instance.m_hasActiveEnemyWave)
                         return;
 
-                    DSCFMod.LogMsg($"A door is opening (LG_Gate IntPtr: {__instance.m_gate.Pointer})!");
-                    DSCFMod.ActiveDoors.Add(__instance.m_gate.Pointer, new DSCFMod.OpeningDoorData()
+                    DCFMod.LogMsg($"A door is opening (LG_Gate IntPtr: {__instance.m_gate.Pointer})!");
+                    DCFMod.ActiveDoors.Add(__instance.m_gate.Pointer, new DCFMod.OpeningDoorData()
                     {
                         LG_Gate = __instance.m_gate,
                         ActivationTime = Time.fixedTime,
@@ -76,7 +76,7 @@ namespace DoorSoundCheeseFix
                     for (int i = 0; i < aig_CourseNode.m_portals.Count; i++)
                     {
                         AIG_CoursePortal aig_CoursePortal = aig_CourseNode.m_portals[i];
-                        if (aig_CoursePortal.IsTraversable || DSCFMod.GateIsOpening(aig_CoursePortal.Gate))
+                        if (aig_CoursePortal.IsTraversable || DCFMod.GateIsOpening(aig_CoursePortal.Gate))
                         {
                             PlayerCoverageSystem.PlayerCoverageData playerCoverageData2 = aig_CoursePortal.m_playerCoverage.m_coverageDatas[instance.m_playerID];
                             if (aig_CoursePortal.m_searchID == AIG_SearchID.SearchID)
@@ -147,7 +147,7 @@ namespace DoorSoundCheeseFix
                     __instance.m_gate.SpawnedDoor.Cast<LG_WeakDoor>().Callback(new Action(() => {
                         if (__instance.m_doorAnimRoutine != null)
                         {
-                            DSCFMod.LogMsg("Door has animation active even though it is destroyed! Stopping and setting to be traversable!");
+                            DCFMod.LogMsg("Door has animation active even though it is destroyed! Stopping and setting to be traversable!");
                             __instance.StopCoroutine(__instance.m_doorAnimRoutine);
                             __instance.m_gate.IsTraversable = true;
                         }

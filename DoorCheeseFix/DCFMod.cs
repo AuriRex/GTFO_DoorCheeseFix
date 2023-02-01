@@ -5,15 +5,15 @@ using LevelGeneration;
 using System.Reflection;
 using UnityEngine;
 
-[assembly: AssemblyInformationalVersion(DoorSoundCheeseFix.DSCFMod.VERSION)]
-[assembly: AssemblyVersion(DoorSoundCheeseFix.DSCFMod.VERSION)]
-[assembly: AssemblyFileVersion(DoorSoundCheeseFix.DSCFMod.VERSION)]
-namespace DoorSoundCheeseFix
+[assembly: AssemblyInformationalVersion(DoorCheeseFix.DCFMod.VERSION)]
+[assembly: AssemblyVersion(DoorCheeseFix.DCFMod.VERSION)]
+[assembly: AssemblyFileVersion(DoorCheeseFix.DCFMod.VERSION)]
+namespace DoorCheeseFix
 {
-    [BepInPlugin(GUID, nameof(DoorSoundCheeseFix), VERSION)]
-    public class DSCFMod : BasePlugin
+    [BepInPlugin(GUID, nameof(DoorCheeseFix), VERSION)]
+    public class DCFMod : BasePlugin
     {
-        public const string GUID = "dev.aurirex.gtfo.doorsoundcheesefix";
+        public const string GUID = "dev.aurirex.gtfo.doorcheesefix";
         public const string VERSION = "1.3.0";
 
         private HarmonyLib.Harmony _harmonyInstance;

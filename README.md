@@ -1,4 +1,4 @@
-# DoorSoundCheeseFix
+# DoorCheeseFix
 
 Reworks how the small (weak) doors opening and closing behavior works:
 
@@ -7,4 +7,4 @@ Reworks how the small (weak) doors opening and closing behavior works:
 
 This does **not** fix "door bug", aka the bug that makes enemies unable to walk through a broken door.
 
-![Door Image](https://github.com/AuriRex/GTFO_DoorSoundCheeseFix/raw/main/Package/icon.png)
+![Door Image](https://github.com/AuriRex/GTFO_DoorCheeseFix/raw/main/Package/icon.png)
