@@ -46,6 +46,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\libs\BepInEx\interop\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="Utils-ASM">
+      <HintPath>..\libs\BepInEx\interop\Utils-ASM.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
