@@ -14,7 +14,7 @@ namespace DoorSoundCheeseFix
     public class DSCFMod : BasePlugin
     {
         public const string GUID = "dev.aurirex.gtfo.doorsoundcheesefix";
-        public const string VERSION = "1.2.0";
+        public const string VERSION = "1.3.0";
 
         private HarmonyLib.Harmony _harmonyInstance;
 

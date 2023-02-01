@@ -10,69 +10,6 @@ namespace DoorSoundCheeseFix
 {
     public class Patches
     {
-        /*[HarmonyPatch(typeof(LG_SecurityDoor_Anim), nameof(LG_SecurityDoor_Anim.EnableAnimator))]
-        internal static class Papapapapap
-        {
-            public static void Postfix()
-            {
-                DSCFMod.LogMsg("EnableAnimator running!");
-            }
-        }
-
-        [HarmonyPatch(typeof(LG_SecurityDoor_Anim), nameof(LG_SecurityDoor_Anim.DelayedDisableAnimator))]
-        internal static class adasdasdsadsad
-        {
-            public static void Postfix()
-            {
-                DSCFMod.LogMsg("DelayedDisableAnimator running!");
-            }
-        }*/
-
-        /*[HarmonyPatch(typeof(LG_Gate), nameof(LG_Gate.IsTraversable), MethodType.Getter)]
-        internal static class LG_Gate_IsTraversable_Patch
-        {
-            // HAS BEEN INLINED
-            public static void Postfix(LG_Gate __instance, ref bool __result)
-            {
-                var door = __instance.SpawnedDoor;
-
-                *//*if (!PlayerCoverageDataPropagator_UpdatePropagate_NodeDistanceUnblocked_Patch.CurrentlyProcessingThings)
-                    return;*/
-
-                /*DSCFMod.LogMsg("TESTING");
-
-                if(door.GetType().Name == nameof(LG_SecurityDoor))
-                {
-                    var secDoor = door.Cast<LG_SecurityDoor>();
-                    if (secDoor != null)
-                    {
-                        DSCFMod.LogMsg("LG_SecurityDoor found!");
-                        var doorAnimData = LG_SecurityDoor_Anim_OnDoorState_Patch.PotentiallyActiveDoors.FirstOrDefault(x => x.LG_Gate == __instance.Pointer);
-                        if (doorAnimData != null)
-                        {
-                            DSCFMod.LogMsg("Found anim data!");
-                            var curTime = Time.fixedTime;
-                            if (doorAnimData.ActivationTime + doorAnimData.UnlockDuration < curTime
-                                && doorAnimData.ActivationTime + doorAnimData.UnlockDuration + doorAnimData.OpenDuration > curTime)
-                            {
-                                DSCFMod.LogMsg("LG_Gate.IsTraversable - returning true as door is opening!");
-                                __result = true;
-                            }
-                            else
-                            {
-                                DSCFMod.LogMsg("LG_Gate.IsTraversable - DOOR NOT READY YET!");
-                            }
-                        }
-                    }
-                }*//*
-                
-
-                
-            }
-        }*/
-
-        
-
         [HarmonyPatch(typeof(ElevatorRide), nameof(ElevatorRide.OnGSWantToStartExpedition))]
         internal static class ElevatorRide_OnGSWantToStartExpedition_Patch
         {
@@ -83,7 +20,6 @@ namespace DoorSoundCheeseFix
             }
         }
 
-        //public void OnDoorState(pDoorState state, bool isRecall)
         [HarmonyPatch(typeof(LG_SecurityDoor_Anim), nameof(LG_SecurityDoor_Anim.OnDoorState))]
         internal static class LG_SecurityDoor_Anim_OnDoorState_Patch
         {
@@ -108,72 +44,17 @@ namespace DoorSoundCheeseFix
                     });
                 }
             }
-            
         }
 
-        //private static void ProcessNoise(NM_NoiseData noiseData)
-        /*[HarmonyPatch(typeof(NoiseManager), nameof(NoiseManager.ProcessNoise))]
-        public static class NoiseManager_ProcessNoise_Patch
-        {
-            // NOT CALLED FOR SHOTS FIRED!!! x-x
-            public static bool CurrentlyProcessingNoise { get; private set; }
-            public static NM_NoiseData CurrentNoiseData { get; private set; }
-
-            public static void Prefix(NM_NoiseData noiseData)
-            {
-                CurrentlyProcessingNoise = true;
-                DSCFMod.LogMsg("Processing Noise now");
-                CurrentNoiseData = noiseData;
-            }
-
-            public static void Postfix()
-            {
-                CurrentlyProcessingNoise = false;
-                DSCFMod.LogMsg("NOT Processing Noise now");
-            }
-        }*/
-
-        //public static List<EnemyAgent> GetReachableEnemiesInNodes(AIG_CourseNode from, int maxNodeDistance)
-        // Useless
-        /*[HarmonyPatch(typeof(AIG_CourseGraph), nameof(AIG_CourseGraph.GetReachableEnemiesInNodes))]
-        public static class AIG_CourseGraph_GetReachableEnemiesInNodes_Patch
-        {
-            // NOT CALLED FOR SHOTS FIRED!!! x-x
-            public static bool CurrentlyProcessingNoise { get; private set; }
-
-            public static void Prefix(AIG_CourseNode from, int maxNodeDistance)
-            {
-                CurrentlyProcessingNoise = true;
-                DSCFMod.LogMsg("Processing GetReachableEnemiesInNodes now");
-            }
-
-            public static void Postfix()
-            {
-                CurrentlyProcessingNoise = false;
-                DSCFMod.LogMsg("NOT Processing GetReachableEnemiesInNodes now ANYMORE");
-            }
-        }*/
-
-        //UpdatePropagate_NodeDistanceUnblocked
         [HarmonyPatch(typeof(PlayerCoverageSystem.PlayerCoverageDataPropagator), nameof(PlayerCoverageSystem.PlayerCoverageDataPropagator.UpdatePropagate_NodeDistanceUnblocked))]
         public static class PlayerCoverageDataPropagator_UpdatePropagate_NodeDistanceUnblocked_Patch
         {
-            //public static bool CurrentlyProcessingThings { get; private set; }
-
             // Gets called very often!
             public static bool Prefix(PlayerCoverageSystem.PlayerCoverageDataPropagator __instance)
             {
-                //CurrentlyProcessingThings = true;
-                //DSCFMod.LogMsg("Processing PlayerCoverageDataPropagator_UpdatePropagate_NodeDistanceUnblocked_Patch");
                 Custom_UpdatePropagate_NodeDistanceUnblocked(__instance);
                 return false;
             }
-
-            /*public static void Postfix()
-            {
-                //CurrentlyProcessingThings = false;
-                //DSCFMod.LogMsg("STOPPED Processing PlayerCoverageDataPropagator_UpdatePropagate_NodeDistanceUnblocked_Patch");
-            }*/
 
             public static void Custom_UpdatePropagate_NodeDistanceUnblocked(PlayerCoverageSystem.PlayerCoverageDataPropagator instance)
             {
@@ -262,14 +143,15 @@ namespace DoorSoundCheeseFix
 
                 if (state.status == eDoorStatus.Destroyed)
                 {
-                    // Janky Door Bug fix maybe?
+                    // Janky door bug fix.
                     __instance.m_gate.SpawnedDoor.Cast<LG_WeakDoor>().Callback(new Action(() => {
-                        if(!__instance.m_gate.IsTraversable)
+                        if (__instance.m_doorAnimRoutine != null)
                         {
-                            DSCFMod.LogMsg("Door was set to be not traversable after being destroyed!! Setting door to be traversable.");
+                            DSCFMod.LogMsg("Door has animation active even though it is destroyed! Stopping and setting to be traversable!");
+                            __instance.StopCoroutine(__instance.m_doorAnimRoutine);
                             __instance.m_gate.IsTraversable = true;
                         }
-                    }), 0.1f);
+                    }), 0.75f);
                 }
             }
 
